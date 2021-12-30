@@ -45,7 +45,7 @@ class ResourceController {
     }
   }
 
-  async news() {
+  async news(req, res, next) {
     try {
       const data = await init('/news', 'news');
 

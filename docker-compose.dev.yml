@@ -6,3 +6,10 @@ services:
       args:
         NODE_ENV: development
     command: npm run dev
+
+  bot:
+    build:
+      context: ./docker/bot
+      args:
+        NODE_ENV: development
+    command: npm run dev

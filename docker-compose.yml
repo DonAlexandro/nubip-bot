@@ -10,6 +10,16 @@ services:
     env_file:
       - ./docker/scrapper/.env
 
+  bot:
+    build: ./docker/bot
+    ports:
+      - 3000:3000
+    volumes:
+      - ./docker/bot:/bot
+    container_name: 'nubip-bot_bot'
+    env_file:
+      - ./docker/bot/.env
+
   elasticsearch:
     image: elasticsearch:7.16.2
     container_name: 'nubip-bot_elastic'
