@@ -1,0 +1,7 @@
+version: '3'
+services:
+  scrapper:
+    build:
+      context: ./docker/scrapper
+      args:
+        NODE_ENV: production

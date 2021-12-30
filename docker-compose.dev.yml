@@ -1,0 +1,8 @@
+version: '3'
+services:
+  scrapper:
+    build:
+      context: ./docker/scrapper
+      args:
+        NODE_ENV: development
+    command: npm run dev
