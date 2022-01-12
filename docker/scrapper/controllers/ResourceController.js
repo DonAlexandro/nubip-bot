@@ -2,10 +2,17 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const ResourceService = require('../services/ResourceService');
+const RedisService = require('../services/RedisService');
 const { baseUrl } = require('../config');
 
 async function init(path, resource) {
   try {
+    const cachedData = await RedisService.getCachedData(resource);
+
+    if (cachedData && cachedData.length) {
+      return cachedData;
+    }
+
     const response = await axios(baseUrl + path);
     const html = response.data;
     const $ = cheerio.load(html);
@@ -17,6 +24,7 @@ async function init(path, resource) {
     }
 
     const data = resourceService[resource]();
+    RedisService.cacheData(resource, data);
 
     return data;
   } catch (error) {
@@ -47,7 +55,7 @@ class ResourceController {
 
   async news() {
     try {
-      const data = await init('/news', 'news');
+      const data = await init('/news?page=1', 'news');
 
       res.json({ data });
     } catch (error) {
