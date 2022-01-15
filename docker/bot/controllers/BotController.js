@@ -1,7 +1,13 @@
 const axios = require('axios');
 const { config, startOptions, errorMessage } = require('../utils/constants');
 
-module.exports = class BotController {
+/**
+ * Controller for manipulation with bot's commands
+ */
+class BotController {
+  /**
+   * @param {TelegramBot} bot - instance of telegram bot
+   */
   constructor(bot) {
     if (!bot) {
       throw new Error('Bot instance is required!');
@@ -10,6 +16,11 @@ module.exports = class BotController {
     this.bot = bot;
   }
 
+  /**
+   * Handle start command
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   start(msg) {
     const chatId = msg.chat.id;
 
@@ -20,6 +31,11 @@ module.exports = class BotController {
     );
   }
 
+  /**
+   * Handle info command
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   info(msg) {
     const chatId = msg.chat.id;
 
@@ -33,6 +49,11 @@ module.exports = class BotController {
     );
   }
 
+  /**
+   * Handle help command
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   help(msg) {
     const chatId = msg.chat.id;
 
@@ -43,6 +64,11 @@ module.exports = class BotController {
     );
   }
 
+  /**
+   * Send image with timetable
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   async timetable(msg) {
     const chatId = msg.chat.id;
 
@@ -57,6 +83,11 @@ module.exports = class BotController {
     }
   }
 
+  /**
+   * Send a bunch of latest news
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   async news(msg) {
     const chatId = msg.chat.id;
 
@@ -77,6 +108,11 @@ module.exports = class BotController {
     }
   }
 
+  /**
+   * Send links to schedules
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   */
   async schedule(msg) {
     const chatId = msg.chat.id;
 
@@ -98,4 +134,6 @@ module.exports = class BotController {
       console.error(error);
     }
   }
-};
+}
+
+module.exports = BotController;

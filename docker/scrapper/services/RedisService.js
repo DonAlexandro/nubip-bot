@@ -16,7 +16,19 @@ let client = null;
 
 const oneHour = 1000 * 60 * 60;
 
+/**
+ * Service for manipulations with cache
+ */
 class RedisService {
+  /**
+   * Function for fetching cached data
+   *
+   * @param {string} key - key of cached data in store
+   *
+   * @throws will throw an error if key param was not provided
+   *
+   * @returns {string | Array<object>} cached data from store
+   */
   async getCachedData(key) {
     if (!key) {
       throw new Error('You must provide cached data key');
@@ -27,6 +39,15 @@ class RedisService {
     return JSON.parse(data);
   }
 
+  /**
+   * Function for caching data
+   *
+   * @param {string} key - key of cached data in store
+   * @param {string | Array<object>} data - data for caching
+   * @param {number} [expiresIn] - how long store will be storing data (1hr by default)
+   *
+   * @throws will throw an error if key or data param were not provided
+   */
   cacheData(key, data, expiresIn = oneHour) {
     if (!key || !data) {
       throw new Error('To make new cache you must provide key and data');

@@ -1,14 +1,27 @@
 const { baseUrl } = require('../config');
 
-module.exports = class ResourceService {
+/**
+ * Service to load and parse requested information
+ */
+class ResourceService {
+  /**
+   * @param {function} instance - cheerio instance for getting information from tags
+   *
+   * @throws will throw an error if instance is not provided
+   */
   constructor(instance) {
     if (!instance) {
-      throw new Error('Instance of ResourceService are required!');
+      throw new Error('Instance of ResourceService are required');
     }
 
     this.$ = instance;
   }
 
+  /**
+   * This function is looking for image with university's timetable
+   *
+   * @returns {string} link to image
+   */
   timetable() {
     let timetable = null;
     const image = this.$('p').find('img');
@@ -24,6 +37,11 @@ module.exports = class ResourceService {
     return timetable;
   }
 
+  /**
+   * This function is looking for files with schedule
+   *
+   * @returns {Array<{name: string, link: string}>} name of each faculty and link to its schedule
+   */
   schedule() {
     const table = this.$('table').not('.MsoNormalTable').children().children().find('td').slice(3).children();
 
@@ -52,6 +70,11 @@ module.exports = class ResourceService {
     return schedules;
   }
 
+  /**
+   * This function is looking for news
+   *
+   * @returns {Array<{title: string, link: string, text: string, date: string}>} latest news from first page
+   */
   news() {
     const list = this.$('.wide-column').children();
     const news = [];
@@ -76,4 +99,6 @@ module.exports = class ResourceService {
 
     return news;
   }
-};
+}
+
+module.exports = ResourceService;

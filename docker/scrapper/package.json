@@ -1,11 +1,12 @@
 {
   "name": "scrapper",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "winston3-logstash-transport": "^1.2.3"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.7",
     "nodemon": "^2.0.15"
   }
 }

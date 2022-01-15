@@ -4,7 +4,7 @@ const ApiError = require('../common/ApiError');
 /**
  * Middleware for exceptions handling
  */
-module.exports = function (err, req, res, next) {
+function errorMiddleware(err, req, res, next) {
   logger.error(err.message);
 
   if (err instanceof ApiError) {
@@ -12,4 +12,6 @@ module.exports = function (err, req, res, next) {
   }
 
   res.status(500).json({ message: 'Щось пішло не так, спробуйте пізніше знову' });
-};
+}
+
+module.exports = errorMiddleware;

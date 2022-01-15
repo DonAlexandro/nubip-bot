@@ -1,3 +1,6 @@
+/**
+ * Global configurations for bot
+ */
 const config = {
   token: process.env.TOKEN,
   timetableAPIPath: process.env.API_URI + '/api/timetable',
@@ -5,6 +8,9 @@ const config = {
   newsAPIPath: process.env.API_URI + '/api/news'
 };
 
+/**
+ * Bot commands with descriptions and regexes
+ */
 const commands = {
   start: {
     command: '/start',
@@ -35,8 +41,14 @@ const commands = {
   }
 };
 
+/**
+ * Unhandled error response message
+ */
 const errorMessage = `Команда виконана не буде, бот прийняв іслам. Відправ ${commands.help.command}, можливо допоможе...`;
 
+/**
+ * Keyboard that will appear after /start command
+ */
 const startOptions = {
   reply_markup: JSON.stringify({
     keyboard: [[commands.schedule.command], [commands.news.command, commands.timetable.command]]

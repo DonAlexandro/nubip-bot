@@ -28,7 +28,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ../volumes/redis:/data
+      - ./volumes/redis:/data
 
   elasticsearch:
     image: elasticsearch:7.16.2
@@ -38,7 +38,7 @@ services:
     ports:
       - 9200:9200
     volumes:
-      - ../volumes/elastic:/usr/share/elasticsearch/data
+      - ./volumes/elastic:/usr/share/elasticsearch/data
 
   logstash:
     image: logstash:7.16.2
