@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: NUBiP Bot scrapper API
+  description: Here you can find how to get all information that we're scrapping from https://nubip.edu.ua
+  version: 0.2.0
+
+servers:
+  - url: http://localhost:5000
+    description: Main endpoint of scrapper
+
+paths:
+  /timetable:
+    get:
+      tags:
+        - 'Files'
+      summary: Returns a link to image with timetable of university
+      responses:
+        '200':
+          description: Link to image with timetable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: https://nubip.edu.ua/path/to/required/image.png
+        '5XX':
+          description: Unexpected error
+  /schedule:
+    get:
+      tags:
+        - 'Lists'
+      summary: Returns schedules
+      responses:
+        '200':
+          description: Names and links of schedules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the schedule
+                        link:
+                          type: string
+                          description: Link to file
+                          example: https://nubip.edu.ua/path/to/required/schedule.xsls
+        '5XX':
+          description: Unexpected error
+  /news:
+    get:
+      tags:
+        - 'Lists'
+      summary: Returns news
+      responses:
+        '200':
+          description: Objects with information of each news
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          description: Title of the news
+                        link:
+                          type: string
+                          description: Link to news
+                          example: https://nubip.edu.ua/path/to/news
+                        text:
+                          type: string
+                          description: Short description of the news
+                        date:
+                          type: string
+                          description: Date of the news
+        '5XX':
+          description: Unexpected error
