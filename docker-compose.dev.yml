@@ -5,4 +5,6 @@ services:
       context: ./docker/scrapper
       args:
         NODE_ENV: development
+    environment:
+      - NODE_ENV=development
     command: npm run dev
