@@ -1,5 +1,6 @@
 const winston = require('winston');
 const WinstonLogstash = require('winston3-logstash-transport');
+const { nodeEnv } = require('../config');
 
 const options = {
   console: {
@@ -29,12 +30,14 @@ const logger = winston.createLogger({
   exitOnError: false
 });
 
-logger.add(
-  new WinstonLogstash({
-    mode: 'tcp',
-    host: 'logstash',
-    port: 28777
-  })
-);
+if (nodeEnv !== 'test') {
+  logger.add(
+    new WinstonLogstash({
+      mode: 'tcp',
+      host: 'logstash',
+      port: 28777
+    })
+  );
+}
 
 module.exports = logger;

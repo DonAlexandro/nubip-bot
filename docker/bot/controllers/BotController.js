@@ -6,11 +6,11 @@ const { config, startOptions, errorMessage } = require('../utils/constants');
  */
 class BotController {
   /**
-   * @param {TelegramBot} bot - instance of telegram bot
+   * @param {TelegramAPI} bot - telegram bot API
    */
   constructor(bot) {
     if (!bot) {
-      throw new Error('Bot instance is required!');
+      throw new Error('Bot instance is required');
     }
 
     this.bot = bot;
@@ -123,7 +123,7 @@ class BotController {
       const schedules = [];
 
       body.data.forEach((schedule) => {
-        schedules.push([{ text: schedule.name, url: schedule.link }]);
+        schedules.push([{ text: schedule.name || schedule.link, url: schedule.link }]);
       });
 
       this.bot.sendMessage(chatId, 'Вибери факультет:', {

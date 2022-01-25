@@ -1,6 +1,6 @@
 {
   "name": "bot",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -8,11 +8,14 @@
     "node-telegram-bot-api": "^0.56.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15",
-    "jsdoc": "^3.6.7"
+    "jest": "^27.4.7",
+    "jsdoc": "^3.6.7",
+    "nodemon": "^2.0.15"
   },
   "scripts": {
-    "doc": "jsdoc -c jsdoc.json"
+    "doc": "jsdoc -c jsdoc.json",
+    "test": "jest --detectOpenHandles",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",

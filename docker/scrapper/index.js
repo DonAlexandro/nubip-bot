@@ -5,6 +5,7 @@ const config = require('./config');
 const logger = require('./utils/logger');
 const errorMiddleware = require('./middlewares/ErrorMiddleware');
 const routes = require('./routes');
+const RedisService = require('./services/RedisService');
 
 const app = express();
 
@@ -22,4 +23,14 @@ app.use('/api', routes);
 
 app.use(errorMiddleware);
 
-app.listen(config.port, () => logger.info(`Scrapper is running on port ${config.port}`));
+async function start() {
+  try {
+    await RedisService.openConnection();
+    app.listen(config.port, () => logger.info(`Scrapper is running on port ${config.port}`));
+  } catch (error) {
+    logger.error(error.message);
+    process.exit(1);
+  }
+}
+
+start();
