@@ -1,12 +1,14 @@
 {
   "name": "scrapper",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "doc": "jsdoc -c jsdoc.json"
+    "doc": "jsdoc -c jsdoc.json",
+    "test": "cross-env BASE_URL=https://nubip.edu.ua jest --detectOpenHandles",
+    "test:coverage": "cross-env BASE_URL=https://nubip.edu.ua jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +22,11 @@
     "winston3-logstash-transport": "^1.2.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^27.4.7",
     "jsdoc": "^3.6.7",
     "nodemon": "^2.0.15",
+    "redis-mock": "^0.56.3",
     "swagger-ui-express": "^4.3.0",
     "yamljs": "^0.3.0"
   }

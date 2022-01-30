@@ -5,7 +5,7 @@ const { baseUrl } = require('../config');
  */
 class ResourceService {
   /**
-   * @param {function} instance - cheerio instance for getting information from tags
+   * @param {cheerio.CheerioAPI} instance - cheerio instance for getting information from tags
    *
    * @throws will throw an error if instance is not provided
    */
@@ -23,7 +23,7 @@ class ResourceService {
    * @returns {string} link to image
    */
   timetable() {
-    let timetable = null;
+    let timetable = 'https://http.cat/404';
     const image = this.$('p').find('img');
 
     image.each((i, elem) => {
@@ -58,7 +58,7 @@ class ResourceService {
       }
 
       if (!/[0-9]\./.test(scheduleName.trim()) && scheduleName.trim()) {
-        scheduleNames.push({ name: scheduleName });
+        scheduleNames.push({ name: scheduleName.trim() });
       }
     });
 
@@ -87,12 +87,12 @@ class ResourceService {
       const text = this.$(elem).find('p').not('.date_and_other').text();
       const date = this.$(elem).find('.date_and_other').text();
 
-      if (titleLink && titleText && text && date) {
+      if (titleLink && titleText) {
         news.push({
           title: titleText,
           link: baseUrl + titleLink,
-          text: text.replace(/→/, '').trim(),
-          date
+          text: text.replace(/→/, '').trim() || '',
+          date: date || ''
         });
       }
     });

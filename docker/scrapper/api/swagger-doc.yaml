@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: NUBiP Bot scrapper API
   description: Here you can find how to get all information that we're scrapping from https://nubip.edu.ua
-  version: 0.2.0
+  version: 1.0.0
 
 servers:
   - url: http://localhost:5000
