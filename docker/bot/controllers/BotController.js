@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { config, startOptions, errorMessage } = require('../utils/constants');
+const { scheduleToReplyMarkup } = require('../utils/functions');
 
 /**
  * Controller for manipulation with bot's commands
@@ -17,18 +18,59 @@ class BotController {
   }
 
   /**
+   * Validate Telegram API message object
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   * @throw will throw an error if msg object is falsy value, it's not an object, it has no chat or id properties
+   *
+   * @returns {TelegramAPI.Message} validated msg object
+   */
+  validate(msg) {
+    if (!msg || typeof msg !== 'object') {
+      throw new Error('Provide valid Telegram API object');
+    } else if (!msg.chat) {
+      throw new Error('Provided Telegram API object does not contain chat property');
+    } else if (!msg.chat.id) {
+      throw new Error('Provided Telegram API object does not contain chat id');
+    }
+
+    return msg;
+  }
+
+  /**
+   * Common wrapper for every function to handle erros in one place and validate msg object
+   *
+   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {Function} callback - wrapped function
+   */
+  async commandWrapper(msg, callback) {
+    try {
+      const validMsg = this.validate(msg);
+      await callback(validMsg);
+    } catch (error) {
+      this.bot.sendMessage(msg?.chat?.id, errorMessage);
+
+      if (config.nodeEnv !== 'test') {
+        console.error(error);
+      }
+    }
+  }
+
+  /**
    * Handle start command
    *
    * @param {TelegramAPI.Message} msg - object with message info
    */
   start(msg) {
-    const chatId = msg.chat.id;
+    this.commandWrapper(msg, (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    this.bot.sendMessage(
-      chatId,
-      'Привіт, гузлік. Шо ти, розклад шукаєш, новини хочеш глянути? Ну давай, жми на кнопки нижче',
-      startOptions
-    );
+      this.bot.sendMessage(
+        chatId,
+        'Привіт, гузлік. Шо ти, розклад шукаєш, новини хочеш глянути? Ну давай, жми на кнопки нижче',
+        startOptions
+      );
+    });
   }
 
   /**
@@ -37,16 +79,18 @@ class BotController {
    * @param {TelegramAPI.Message} msg - object with message info
    */
   info(msg) {
-    const chatId = msg.chat.id;
+    this.commandWrapper(msg, (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    this.bot.sendMessage(
-      chatId,
-      `<b>Хелло слейв'янін!</b>
+      this.bot.sendMessage(
+        chatId,
+        `<b>Хелло слейв'янін!</b>
 Я був створений чисто як навчальний проєкт і зараз находжуся в альфа версії, тому поки що я примітивний, як тьолка з айфоном і чехлом з вушками.
 В принципі, є велика імовірність, шо таким і залишуся, або якщо і стану кращим, то ніхто того не замітить :)
 Всьо, можеш продовжувати дивитися свій тік-ток і лоскотати себе в штанах`,
-      { parse_mode: 'HTML' }
-    );
+        { parse_mode: 'HTML' }
+      );
+    });
   }
 
   /**
@@ -55,13 +99,15 @@ class BotController {
    * @param {TelegramAPI.Message} msg - object with message info
    */
   help(msg) {
-    const chatId = msg.chat.id;
+    this.commandWrapper(msg, (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    this.bot.sendMessage(
-      chatId,
-      `Якшо шось поламалося, то скоріше за все, то шось помінялося на сайті НУБіП, звідки я черпаю інформацію, але зараз вона по якійсь причині стала недоступна
+      this.bot.sendMessage(
+        chatId,
+        `Якшо шось поламалося, то скоріше за все, то шось помінялося на сайті НУБіП, звідки я черпаю інформацію, але зараз вона по якійсь причині стала недоступна
 Нам з тобою залишається надіятися, шо мій автор не забив BIG COCK на мене і згодом він все поправить`
-    );
+      );
+    });
   }
 
   /**
@@ -70,17 +116,14 @@ class BotController {
    * @param {TelegramAPI.Message} msg - object with message info
    */
   async timetable(msg) {
-    const chatId = msg.chat.id;
+    await this.commandWrapper(msg, async (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    try {
-      const response = await axios(config.timetableAPIPath);
+      const response = await axios.get(config.timetableAPIPath);
       const body = response.data;
 
       this.bot.sendPhoto(chatId, body.data);
-    } catch (error) {
-      this.bot.sendMessage(chatId, errorMessage);
-      console.error(error);
-    }
+    });
   }
 
   /**
@@ -89,23 +132,20 @@ class BotController {
    * @param {TelegramAPI.Message} msg - object with message info
    */
   async news(msg) {
-    const chatId = msg.chat.id;
+    await this.commandWrapper(msg, async (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    try {
-      const response = await axios(config.newsAPIPath);
+      const response = await axios.get(config.newsAPIPath);
       const body = response.data;
 
-      body.data.forEach((article) => {
+      for (const article of body.data) {
         this.bot.sendMessage(
           chatId,
           `<b>${article.title}</b> \n <i>${article.date}</i> \n\n ${article.text} \n <a href="${article.link}">Читати продовження...</a>`,
           { parse_mode: 'HTML' }
         );
-      });
-    } catch (error) {
-      this.bot.sendMessage(chatId, errorMessage);
-      console.error(error);
-    }
+      }
+    });
   }
 
   /**
@@ -114,25 +154,18 @@ class BotController {
    * @param {TelegramAPI.Message} msg - object with message info
    */
   async schedule(msg) {
-    const chatId = msg.chat.id;
+    await this.commandWrapper(msg, async (validMsg) => {
+      const chatId = validMsg.chat.id;
 
-    try {
-      const response = await axios(config.scheduleAPIPath);
+      const response = await axios.get(config.scheduleAPIPath);
       const body = response.data;
 
-      const schedules = [];
-
-      body.data.forEach((schedule) => {
-        schedules.push([{ text: schedule.name || schedule.link, url: schedule.link }]);
-      });
+      const schedules = scheduleToReplyMarkup(body.data);
 
       this.bot.sendMessage(chatId, 'Вибери факультет:', {
         reply_markup: JSON.stringify({ inline_keyboard: schedules })
       });
-    } catch (error) {
-      this.bot.sendMessage(chatId, errorMessage);
-      console.error(error);
-    }
+    });
   }
 }
 
