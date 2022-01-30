@@ -1,25 +1,32 @@
 const redis = require('redis');
-let client = null;
+const logger = require('../utils/logger');
+const { nodeEnv } = require('../config');
 
-(async () => {
-  client = redis.createClient({
-    socket: {
-      host: 'redis',
-      port: 6379
-    }
-  });
-
-  client.on('error', (error) => console.log(`Redis connection error: ${error}`));
-
-  await client.connect();
-})();
-
-const oneHour = 1000 * 60 * 60;
+const oneHour = 60 * 60;
 
 /**
  * Service for manipulations with cache
  */
 class RedisService {
+  client = null;
+
+  async openConnection() {
+    this.client = redis.createClient({
+      socket: {
+        host: nodeEnv === 'test' ? 'localhost' : 'redis',
+        port: 6379
+      }
+    });
+
+    this.client.on('error', (error) => logger.error(`Redis connection error: ${error}`));
+
+    if (nodeEnv !== 'test') {
+      this.client.on('ready', () => logger.info(`Redis is ready to use!`));
+    }
+
+    await this.client.connect();
+  }
+
   /**
    * Function for fetching cached data
    *
@@ -34,7 +41,7 @@ class RedisService {
       throw new Error('You must provide cached data key');
     }
 
-    const data = await client.get(key);
+    const data = await this.client.get(key);
 
     return JSON.parse(data);
   }
@@ -50,10 +57,38 @@ class RedisService {
    */
   cacheData(key, data, expiresIn = oneHour) {
     if (!key || !data) {
-      throw new Error('To make new cache you must provide key and data');
+      throw new Error('To make a new cache you must provide key and data');
     }
 
-    client.setEx(key, expiresIn, JSON.stringify(data));
+    this.client.setEx(key, expiresIn, JSON.stringify(data));
+  }
+
+  /**
+   * Function for deleting cached data
+   *
+   * @param {string} key - key of cached data in store
+   *
+   * @throws will throw an error if key was not provided
+   */
+  deleteCachedData(key) {
+    if (!key) {
+      throw new Error('You must provide cached data key to delete it');
+    }
+
+    this.client.del(key);
+  }
+
+  /**
+   * Function for closing connection to redis
+   *
+   * @throws will throw an error client isn't connected
+   */
+  closeConnection() {
+    if (!this.client) {
+      throw new Error(`You cannot close connection because it's already closed`);
+    }
+
+    this.client.quit();
   }
 }
 

@@ -3,6 +3,7 @@
  */
 const config = {
   token: process.env.TOKEN,
+  nodeEnv: process.env.NODE_ENV,
   timetableAPIPath: process.env.API_URI + '/api/timetable',
   scheduleAPIPath: process.env.API_URI + '/api/schedule',
   newsAPIPath: process.env.API_URI + '/api/news'

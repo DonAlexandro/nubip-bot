@@ -1,5 +1,5 @@
 dev-build() {
-  docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build $1
+  docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 }
 
 dev-start() {
@@ -20,4 +20,20 @@ prod-start() {
 
 prod-down() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml down -v
+}
+
+runAllTests() {
+  commandToExecute="npm run test"
+
+  if [ "$1" = --withCoverage ]; then
+    commandToExecute="npm run test:coverage"
+  fi
+
+  pushd ./docker/bot || exit 1
+  eval "$commandToExecute"
+  popd || exit 1
+
+  pushd ./docker/scrapper || exit 1
+  eval "$commandToExecute"
+  popd || exit 1
 }
