@@ -42,6 +42,26 @@ const commands = {
   }
 };
 
+const responseMessages = {
+  start: 'Привіт, гузлік. Шо ти, розклад шукаєш, новини хочеш глянути? Ну давай, жми на кнопки нижче',
+  info: `<b>Хелло слейв'янін!</b>
+Я був створений чисто як навчальний проєкт і зараз находжуся в альфа версії, тому поки що я примітивний, як тьолка з айфоном і чехлом з вушками.
+В принципі, є велика імовірність, шо таким і залишуся, або якщо і стану кращим, то ніхто того не замітить :)
+Всьо, можеш продовжувати дивитися свій тік-ток і лоскотати себе в штанах`,
+  help: `Якшо шось поламалося, то скоріше за все, то шось помінялося на сайті НУБіП, звідки я черпаю інформацію, але зараз вона по якійсь причині стала недоступна
+Нам з тобою залишається надіятися, шо мій автор не забив BIG COCK на мене і згодом він все поправить`,
+  schedule: 'Вибери факультет:',
+  validate: {
+    wrongTelegramAPI: 'Provide valid Telegram API object',
+    missedChatProperty: 'Provided Telegram API object does not contain chat property',
+    missedIdProperty: 'Provided Telegram API object does not contain chat id'
+  },
+  scheduleToReplyMarkup: {
+    wrongData: 'Provide valid data to convert it to markup',
+    missingProperties: 'Schedule object must contain name and link'
+  }
+};
+
 /**
  * Unhandled error response message
  */
@@ -56,4 +76,4 @@ const startOptions = {
   })
 };
 
-module.exports = { config, commands, startOptions, errorMessage };
+module.exports = { config, commands, startOptions, errorMessage, responseMessages };

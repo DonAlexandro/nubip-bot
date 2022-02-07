@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { config, startOptions, errorMessage } = require('../utils/constants');
+const { config, startOptions, errorMessage, responseMessages } = require('../utils/constants');
 const { scheduleToReplyMarkup } = require('../utils/functions');
 
 /**
@@ -27,11 +27,11 @@ class BotController {
    */
   validate(msg) {
     if (!msg || typeof msg !== 'object') {
-      throw new Error('Provide valid Telegram API object');
+      throw new Error(responseMessages.validate.wrongTelegramAPI);
     } else if (!msg.chat) {
-      throw new Error('Provided Telegram API object does not contain chat property');
+      throw new Error(responseMessages.validate.missedChatProperty);
     } else if (!msg.chat.id) {
-      throw new Error('Provided Telegram API object does not contain chat id');
+      throw new Error(responseMessages.validate.missedIdProperty);
     }
 
     return msg;
@@ -65,11 +65,7 @@ class BotController {
     this.commandWrapper(msg, (validMsg) => {
       const chatId = validMsg.chat.id;
 
-      this.bot.sendMessage(
-        chatId,
-        'Привіт, гузлік. Шо ти, розклад шукаєш, новини хочеш глянути? Ну давай, жми на кнопки нижче',
-        startOptions
-      );
+      this.bot.sendMessage(chatId, responseMessages.start, startOptions);
     });
   }
 
@@ -82,14 +78,7 @@ class BotController {
     this.commandWrapper(msg, (validMsg) => {
       const chatId = validMsg.chat.id;
 
-      this.bot.sendMessage(
-        chatId,
-        `<b>Хелло слейв'янін!</b>
-Я був створений чисто як навчальний проєкт і зараз находжуся в альфа версії, тому поки що я примітивний, як тьолка з айфоном і чехлом з вушками.
-В принципі, є велика імовірність, шо таким і залишуся, або якщо і стану кращим, то ніхто того не замітить :)
-Всьо, можеш продовжувати дивитися свій тік-ток і лоскотати себе в штанах`,
-        { parse_mode: 'HTML' }
-      );
+      this.bot.sendMessage(chatId, responseMessages.info, { parse_mode: 'HTML' });
     });
   }
 
@@ -102,11 +91,7 @@ class BotController {
     this.commandWrapper(msg, (validMsg) => {
       const chatId = validMsg.chat.id;
 
-      this.bot.sendMessage(
-        chatId,
-        `Якшо шось поламалося, то скоріше за все, то шось помінялося на сайті НУБіП, звідки я черпаю інформацію, але зараз вона по якійсь причині стала недоступна
-Нам з тобою залишається надіятися, шо мій автор не забив BIG COCK на мене і згодом він все поправить`
-      );
+      this.bot.sendMessage(chatId, responseMessages.help);
     });
   }
 
@@ -162,7 +147,7 @@ class BotController {
 
       const schedules = scheduleToReplyMarkup(body.data);
 
-      this.bot.sendMessage(chatId, 'Вибери факультет:', {
+      this.bot.sendMessage(chatId, responseMessages.schedule, {
         reply_markup: JSON.stringify({ inline_keyboard: schedules })
       });
     });

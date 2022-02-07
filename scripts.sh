@@ -7,7 +7,7 @@ dev-start() {
 }
 
 dev-down() {
-  docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
+  docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 }
 
 prod-build() {
@@ -19,7 +19,7 @@ prod-start() {
 }
 
 prod-down() {
-  docker-compose -f docker-compose.yml -f docker-compose.prod.yml down -v
+  docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 }
 
 runAllTests() {

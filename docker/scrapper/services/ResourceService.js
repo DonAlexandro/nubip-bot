@@ -1,4 +1,5 @@
 const { baseUrl } = require('../config');
+const { errorMessages } = require('../utils/constants');
 
 /**
  * Service to load and parse requested information
@@ -11,7 +12,7 @@ class ResourceService {
    */
   constructor(instance) {
     if (!instance) {
-      throw new Error('Instance of ResourceService are required');
+      throw new Error(errorMessages.resourceService.constructorError);
     }
 
     this.$ = instance;

@@ -1,6 +1,7 @@
 const logger = require('../utils/logger');
 const ApiError = require('../common/ApiError');
 const { nodeEnv } = require('../config');
+const { errorMessages } = require('../utils/constants');
 
 /**
  * Middleware for exceptions handling
@@ -14,7 +15,7 @@ function errorMiddleware(err, req, res) {
     return res.status(err.code).json({ message: err.message });
   }
 
-  res.status(500).json({ message: 'Щось пішло не так, спробуйте пізніше знову' });
+  res.status(500).json({ message: errorMessages.errorMiddleware.unexpectedError });
 }
 
 module.exports = errorMiddleware;

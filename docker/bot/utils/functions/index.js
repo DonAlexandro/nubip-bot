@@ -1,3 +1,5 @@
+const { responseMessages } = require('../constants');
+
 /**
  * Convert schedules provided by scrapper to correct Telegram API markup
  *
@@ -9,14 +11,14 @@
  */
 exports.scheduleToReplyMarkup = (data) => {
   if (!Array.isArray(data)) {
-    throw new Error('Provide valid data to convert it to markup');
+    throw new Error(responseMessages.scheduleToReplyMarkup.wrongData);
   }
 
   const schedules = [];
 
   for (const schedule of data) {
     if (!schedule.link || !schedule.name) {
-      throw new Error('Schedule object must contain name and link');
+      throw new Error(responseMessages.scheduleToReplyMarkup.missingProperties);
     }
 
     schedules.push([{ text: schedule.name || schedule.link, url: schedule.link }]);

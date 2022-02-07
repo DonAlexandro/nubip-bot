@@ -16,6 +16,7 @@ const {
   htmlNewsWithoutTitle,
   htmlNewsWithoutDateAndText
 } = require('../utils/tests/testData');
+const { errorMessages } = require('../utils/constants');
 
 describe('Resource Service', () => {
   describe('constructor', () => {
@@ -30,7 +31,7 @@ describe('Resource Service', () => {
     it('should throw an error without cheerio instance', () => {
       expect(() => {
         const resourceService = new ResourceService();
-      }).toThrow('Instance of ResourceService are required');
+      }).toThrow(errorMessages.resourceService.constructorError);
     });
   });
 

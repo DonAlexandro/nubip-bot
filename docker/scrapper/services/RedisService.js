@@ -1,5 +1,6 @@
 const redis = require('redis');
 const logger = require('../utils/logger');
+const { errorMessages } = require('../utils/constants');
 const { nodeEnv } = require('../config');
 
 const oneHour = 60 * 60;
@@ -38,7 +39,7 @@ class RedisService {
    */
   async getCachedData(key) {
     if (!key) {
-      throw new Error('You must provide cached data key');
+      throw new Error(errorMessages.redisService.getCachedDataError);
     }
 
     const data = await this.client.get(key);
@@ -57,7 +58,7 @@ class RedisService {
    */
   cacheData(key, data, expiresIn = oneHour) {
     if (!key || !data) {
-      throw new Error('To make a new cache you must provide key and data');
+      throw new Error(errorMessages.redisService.createCachedDataError);
     }
 
     this.client.setEx(key, expiresIn, JSON.stringify(data));
@@ -72,7 +73,7 @@ class RedisService {
    */
   deleteCachedData(key) {
     if (!key) {
-      throw new Error('You must provide cached data key to delete it');
+      throw new Error(errorMessages.redisService.deleteCachedDataError);
     }
 
     this.client.del(key);
@@ -81,11 +82,11 @@ class RedisService {
   /**
    * Function for closing connection to redis
    *
-   * @throws will throw an error client isn't connected
+   * @throws will throw an error if client isn't connected
    */
   closeConnection() {
     if (!this.client) {
-      throw new Error(`You cannot close connection because it's already closed`);
+      throw new Error(errorMessages.redisService.closeConnectioError);
     }
 
     this.client.quit();

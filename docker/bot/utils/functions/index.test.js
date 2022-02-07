@@ -1,5 +1,6 @@
 const { scheduleToReplyMarkup } = require('.');
 const { testSchedules } = require('../constants/tests');
+const { responseMessages } = require('../constants/');
 
 describe('Utils functions', () => {
   it('should convert array with schedules to correct Telegram markup', () => {
@@ -14,32 +15,32 @@ describe('Utils functions', () => {
   it('should throw an error if provided data is not array', () => {
     expect(() => {
       scheduleToReplyMarkup({});
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
 
     expect(() => {
       scheduleToReplyMarkup(123);
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
 
     expect(() => {
       scheduleToReplyMarkup('123');
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
 
     expect(() => {
       scheduleToReplyMarkup(false);
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
 
     expect(() => {
       scheduleToReplyMarkup(null);
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
 
     expect(() => {
       scheduleToReplyMarkup(undefined);
-    }).toThrow('Provide valid data to convert it to markup');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.wrongData);
   });
 
   it('should throw an error if some object does not contain required properties', () => {
     expect(() => {
       scheduleToReplyMarkup([{ propery: 'test', test: 'property' }]);
-    }).toThrow('Schedule object must contain name and link');
+    }).toThrow(responseMessages.scheduleToReplyMarkup.missingProperties);
   });
 });

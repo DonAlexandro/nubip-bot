@@ -30,4 +30,3 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 `runAllTest [options]` - run unit tests for bot and scrapper. Options:
 
 1. **--withCoverage** - run tests with coverage table
-
