@@ -1,4 +1,5 @@
 const ApiError = require('../common/ApiError');
+const { errorMessages } = require('../utils/constants');
 const errorMiddleware = require('./ErrorMiddleware');
 
 describe('Error Middleware', () => {
@@ -30,6 +31,6 @@ describe('Error Middleware', () => {
     errorMiddleware(error, req, res);
 
     expect(res.status).toBeCalledWith(500);
-    expect(res.json).toBeCalledWith({ message: 'Щось пішло не так, спробуйте пізніше знову' });
+    expect(res.json).toBeCalledWith({ message: errorMessages.errorMiddleware.unexpectedError });
   });
 });

@@ -30,16 +30,6 @@ services:
     volumes:
       - ./volumes/redis:/data
 
-  elasticsearch:
-    image: elasticsearch:7.16.2
-    container_name: 'nubip-bot_elastic'
-    environment:
-      - discovery.type=single-node
-    ports:
-      - 9200:9200
-    volumes:
-      - ./volumes/elastic:/usr/share/elasticsearch/data
-
   logstash:
     image: logstash:7.16.2
     container_name: 'nubip-bot_logstash'
@@ -48,5 +38,3 @@ services:
     ports:
       - 9600:9600
       - 28777:28777
-    depends_on:
-      - elasticsearch

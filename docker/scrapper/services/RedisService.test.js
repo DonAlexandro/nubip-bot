@@ -1,5 +1,6 @@
 const RedisService = require('./RedisService');
 const { testNews } = require('../utils/tests/testData');
+const { errorMessages } = require('../utils/constants');
 
 describe('Redis Service', () => {
   afterAll(() => {
@@ -32,7 +33,7 @@ describe('Redis Service', () => {
         try {
           await RedisService.getCachedData();
         } catch (error) {
-          expect(error.message).toEqual('You must provide cached data key');
+          expect(error.message).toEqual(errorMessages.redisService.getCachedDataError);
         }
       });
     });
@@ -48,13 +49,13 @@ describe('Redis Service', () => {
       it('should throw an error if key was not provided', () => {
         expect(() => {
           RedisService.cacheData();
-        }).toThrow('To make a new cache you must provide key and data');
+        }).toThrow(errorMessages.redisService.createCachedDataError);
       });
 
       it('should throw an error if key was not provided', () => {
         expect(() => {
           RedisService.cacheData('test');
-        }).toThrow('To make a new cache you must provide key and data');
+        }).toThrow(errorMessages.redisService.createCachedDataError);
       });
     });
 
@@ -70,7 +71,7 @@ describe('Redis Service', () => {
       it('should throw an error if key was not provided', () => {
         expect(() => {
           RedisService.deleteCachedData();
-        }).toThrow('You must provide cached data key to delete it');
+        }).toThrow(errorMessages.redisService.deleteCachedDataError);
       });
     });
   });

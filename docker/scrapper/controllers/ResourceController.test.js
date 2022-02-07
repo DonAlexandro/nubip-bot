@@ -1,6 +1,7 @@
 const ResourceController = require('./ResourceController');
 const RedisService = require('../services/RedisService');
 const { testNews } = require('../utils/tests/testData');
+const { errorMessages } = require('../utils/constants');
 
 describe('Resource Controller', () => {
   describe('methods', () => {
@@ -24,10 +25,14 @@ describe('Resource Controller', () => {
       });
 
       it('should throw an error if resource are wrong', async () => {
+        const wrongResource = 'unexistingResource';
+
         try {
-          await ResourceController.init('/news', 'unexistingResource');
+          await ResourceController.init('/news', wrongResource);
         } catch (error) {
-          expect(error.message).toBe('There is no "unexistingResource" resource');
+          expect(error.message).toBe(
+            errorMessages.resourceController.initWrongResourceError.replace(':resource', wrongResource)
+          );
         }
       });
 
@@ -35,7 +40,7 @@ describe('Resource Controller', () => {
         try {
           await ResourceController.init('/unexistingPath', 'news');
         } catch (error) {
-          expect(error.message).toBe('Інформація не була знайдена на сайті НУБіП');
+          expect(error.message).toBe(errorMessages.resourceController.initNotFoundError);
           expect(error.code).toBe(404);
         }
       });
@@ -44,7 +49,7 @@ describe('Resource Controller', () => {
         try {
           await ResourceController.init(123, null);
         } catch (error) {
-          expect(error.message).toBe('Path and resource params must be type of string');
+          expect(error.message).toBe(errorMessages.resourceController.initParamsError);
         }
       });
     });

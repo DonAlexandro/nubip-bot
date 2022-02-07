@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { startOptions, config, errorMessage } = require('../utils/constants');
+const { startOptions, config, errorMessage, responseMessages } = require('../utils/constants');
 const { testNews, testSchedules } = require('../utils/constants/tests');
 const { scheduleToReplyMarkup } = require('../utils/functions');
 const BotController = require('./BotController');
@@ -47,31 +47,31 @@ describe('Bot Controller', () => {
       it('should throw an error if msg is not a object', () => {
         expect(() => {
           botController.validate(123);
-        }).toThrow('Provide valid Telegram API object');
+        }).toThrow(responseMessages.validate.wrongTelegramAPI);
 
         expect(() => {
           botController.validate(null);
-        }).toThrow('Provide valid Telegram API object');
+        }).toThrow(responseMessages.validate.wrongTelegramAPI);
 
         expect(() => {
           botController.validate(undefined);
-        }).toThrow('Provide valid Telegram API object');
+        }).toThrow(responseMessages.validate.wrongTelegramAPI);
 
         expect(() => {
           botController.validate(false);
-        }).toThrow('Provide valid Telegram API object');
+        }).toThrow(responseMessages.validate.wrongTelegramAPI);
       });
 
       it('should throw an error if msg does not contain chat object', () => {
         expect(() => {
           botController.validate({});
-        }).toThrow('Provided Telegram API object does not contain chat property');
+        }).toThrow(responseMessages.validate.missedChatProperty);
       });
 
       it('should throw an error if msg does not contain chat object', () => {
         expect(() => {
           botController.validate({ chat: {} });
-        }).toThrow('Provided Telegram API object does not contain chat id');
+        }).toThrow(responseMessages.validate.missedIdProperty);
       });
     });
 
@@ -101,11 +101,7 @@ describe('Bot Controller', () => {
       it('should send start message', () => {
         botController.start(mockMessage);
 
-        expect(mockBot.sendMessage).toBeCalledWith(
-          mockMessage.chat.id,
-          'Привіт, гузлік. Шо ти, розклад шукаєш, новини хочеш глянути? Ну давай, жми на кнопки нижче',
-          startOptions
-        );
+        expect(mockBot.sendMessage).toBeCalledWith(mockMessage.chat.id, responseMessages.start, startOptions);
       });
     });
 
@@ -113,14 +109,7 @@ describe('Bot Controller', () => {
       it('should send info message', () => {
         botController.info(mockMessage);
 
-        expect(mockBot.sendMessage).toBeCalledWith(
-          mockMessage.chat.id,
-          `<b>Хелло слейв'янін!</b>
-Я був створений чисто як навчальний проєкт і зараз находжуся в альфа версії, тому поки що я примітивний, як тьолка з айфоном і чехлом з вушками.
-В принципі, є велика імовірність, шо таким і залишуся, або якщо і стану кращим, то ніхто того не замітить :)
-Всьо, можеш продовжувати дивитися свій тік-ток і лоскотати себе в штанах`,
-          { parse_mode: 'HTML' }
-        );
+        expect(mockBot.sendMessage).toBeCalledWith(mockMessage.chat.id, responseMessages.info, { parse_mode: 'HTML' });
       });
     });
 
@@ -129,11 +118,7 @@ describe('Bot Controller', () => {
         mockBot.sendMessage = jest.fn();
         botController.help(mockMessage);
 
-        expect(mockBot.sendMessage).toBeCalledWith(
-          mockMessage.chat.id,
-          `Якшо шось поламалося, то скоріше за все, то шось помінялося на сайті НУБіП, звідки я черпаю інформацію, але зараз вона по якійсь причині стала недоступна
-Нам з тобою залишається надіятися, шо мій автор не забив BIG COCK на мене і згодом він все поправить`
-        );
+        expect(mockBot.sendMessage).toBeCalledWith(mockMessage.chat.id, responseMessages.help);
       });
     });
 
@@ -172,7 +157,7 @@ describe('Bot Controller', () => {
         const schedules = scheduleToReplyMarkup(testSchedules);
 
         expect(axios.get).toBeCalledWith(config.scheduleAPIPath);
-        expect(mockBot.sendMessage).toBeCalledWith(mockMessage.chat.id, 'Вибери факультет:', {
+        expect(mockBot.sendMessage).toBeCalledWith(mockMessage.chat.id, responseMessages.schedule, {
           reply_markup: JSON.stringify({ inline_keyboard: schedules })
         });
       });

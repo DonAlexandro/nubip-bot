@@ -5,6 +5,7 @@ const ResourceService = require('../services/ResourceService');
 const RedisService = require('../services/RedisService');
 const { baseUrl } = require('../config');
 const ApiError = require('../common/ApiError');
+const { errorMessages } = require('../utils/constants');
 
 /**
  * Controller for routing requested resources
@@ -25,7 +26,7 @@ class ResourceController {
     try {
       // Function can accept only strings as a params so need to check it
       if (typeof path !== 'string' || typeof resource !== 'string') {
-        throw new Error('Path and resource params must be type of string');
+        throw new Error(errorMessages.resourceController.initParamsError);
       }
 
       // Here we're looking for cached data and return it if there is something
@@ -44,7 +45,7 @@ class ResourceController {
 
       // If there was provided unexisiting resource, throw an error about this
       if (!resourceService[resource]) {
-        throw new Error(`There is no "${resource}" resource`);
+        throw new Error(errorMessages.resourceController.initWrongResourceError.replace(':resource', resource));
       }
 
       // Parse, cache and return loaded data
@@ -55,7 +56,7 @@ class ResourceController {
     } catch (error) {
       // If there was provided wrong path, throw an error about this
       if (error.response && error.response.status === 404) {
-        throw ApiError.NotFound('Інформація не була знайдена на сайті НУБіП', 'ResourceController.init');
+        throw ApiError.NotFound(errorMessages.resourceController.initNotFoundError, 'ResourceController.init');
       }
 
       // If error is already instance of Error just throw it

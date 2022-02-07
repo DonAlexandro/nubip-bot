@@ -1,3 +1,5 @@
+const { errorMessages } = require('../utils/constants');
+
 /**
  * Custom error class for handling API exceptions
  */
@@ -16,7 +18,7 @@ class ApiError extends Error {
    */
   constructor(code, message, source = '') {
     if (!code || !message) {
-      throw new Error('To throw API Error you must provide both code and message');
+      throw new Error(errorMessages.apiError.constructorError);
     }
 
     super(message);
