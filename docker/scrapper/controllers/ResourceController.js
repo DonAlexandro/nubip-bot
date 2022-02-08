@@ -14,7 +14,7 @@ const { errorMessages } = require('../utils/constants');
 class ResourceController {
   /**
    * This function fetch information from NUBiP website and parse it, using appropriate service.
-   * It's also looking for cached data to improve perfomance.
+   * It's also looking for cached data to improve performance.
    *
    * @param {string} path - Path to NUBiP's webpage, where we can find requested information.
    * @param {string} resource - The name of the resource that we are looking for.
@@ -42,7 +42,7 @@ class ResourceController {
 
       const resourceService = new ResourceService($);
 
-      // If there was provided unexisiting resource, throw an error about this
+      // If there was provided nonexisting resource, throw an error about this
       if (!resourceService[resource]) {
         throw new Error(errorMessages.resourceController.initWrongResourceError.replace(':resource', resource));
       }
@@ -69,7 +69,7 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for timetable image.
+   * This function searches for timetable image.
    *
    * @param {Request} req - Route's request object.
    * @param {Response} res - Route's response object.
@@ -86,7 +86,7 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for schedules.
+   * This function searches for schedules.
    *
    * @param {Request} req - Route's request object.
    * @param {Response} res - Route's response object.
@@ -103,7 +103,7 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for news.
+   * This function searches for news.
    *
    * @param {Request} req - Route's request object.
    * @param {Response} res - Route's response object.

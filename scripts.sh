@@ -1,41 +1,59 @@
-dev-build() {
+#!/bin/bash
+
+devBuild() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 }
 
-dev-start() {
+devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 }
 
-dev-down() {
+devDown() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 }
 
-prod-build() {
+prodBuild() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 }
 
-prod-start() {
+prodStart() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 }
 
-prod-down() {
+prodDown() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 }
 
 runAllTests() {
-  exec 1>/dev/null
-
   commandToExecute="npm run test"
 
   if [ "$1" = --withCoverage ]; then
     commandToExecute="npm run test:coverage"
   fi
 
-  pushd ./docker/bot || exit 1
+  pushd ./docker/bot 1>/dev/null || exit 1
   eval "$commandToExecute"
   popd || exit 1
 
-  pushd ./docker/scrapper || exit 1
+  pushd ./docker/scrapper 1>/dev/null || exit 1
   eval "$commandToExecute"
   popd || exit 1
+}
+
+runAllLinters() {
+  commandToExecute="npm run lint"
+
+  pushd ./docker/bot 1>/dev/null || exit 1
+  eval "$commandToExecute"
+  popd || exit 1
+
+  pushd ./docker/scrapper 1>/dev/null || exit 1
+  eval "$commandToExecute"
+  popd || exit 1
+}
+
+preCommitPreparation() {
+  runAllTests
+  npm run format
+  runAllLinters
 }

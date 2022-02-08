@@ -8,7 +8,7 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 
 ### Common for bot and scrapper
 
-`doc` - generate API documentatio <br>
+`doc` - generate API documentation <br>
 `test` - run tests <br>
 `test:coverage` - run tests with coverage table <br>
 
@@ -19,13 +19,13 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 
 ## Available bash scripts
 
-`dev-build` - build images and start containers in development mode <br>
-`dev-start` - start containers in development mode <br>
-`dev-down` - remove images, network and containers which was started in development mode <br>
+`devBuild` - build images and start containers in development mode <br>
+`devStart` - start containers in development mode <br>
+`devDown` - remove images, network and containers which was started in development mode <br>
 
-`prod-build` - build images and start containers in production mode <br>
-`prod-start` - start containers in production mode <br>
-`prod-down` - remove images, network and containers which was started in production mode <br>
+`prodBuild` - build images and start containers in production mode <br>
+`prodStart` - start containers in production mode <br>
+`prodDown` - remove images, network and containers which was started in production mode <br>
 
 `runAllTest [options]` - run unit tests for bot and scrapper. Options:
 
