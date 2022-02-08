@@ -30,7 +30,7 @@ describe('Resource Service', () => {
 
     it('should throw an error without cheerio instance', () => {
       expect(() => {
-        const resourceService = new ResourceService();
+        new ResourceService();
       }).toThrow(errorMessages.resourceService.constructorError);
     });
   });

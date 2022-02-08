@@ -1,5 +1,5 @@
 /**
- * Array with news to test news function
+ * Array with news to test news function.
  */
 const testNews = [
   {

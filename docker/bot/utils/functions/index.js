@@ -1,13 +1,11 @@
 const { responseMessages } = require('../constants');
 
 /**
- * Convert schedules provided by scrapper to correct Telegram API markup
+ * Convert schedules provided by scrapper to correct Telegram API markup.
  *
- * @param {Array<{name: string, link: string}>} data - array with schedules
- *
- * @throws will throw an error if data won't be a correct array or won't contain required properties
- *
- * @returns {Array<Array<{text: string, url: string}>>} converted array
+ * @param {Array<{name: string, link: string}>} data - Array with schedules.
+ * @throws Will throw an error if data won't be a correct array or won't contain required properties.
+ * @returns {Array<Array<{text: string, url: string}>>} Converted array.
  */
 exports.scheduleToReplyMarkup = (data) => {
   if (!Array.isArray(data)) {

@@ -1,5 +1,5 @@
 /**
- * Global configurations for bot
+ * Global configurations for bot.
  */
 const config = {
   token: process.env.TOKEN,
@@ -10,7 +10,7 @@ const config = {
 };
 
 /**
- * Bot commands with descriptions and regexes
+ * Bot commands with descriptions and regexes.
  */
 const commands = {
   start: {
@@ -63,12 +63,12 @@ const responseMessages = {
 };
 
 /**
- * Unhandled error response message
+ * Unhandled error response message.
  */
 const errorMessage = `Команда виконана не буде, бот прийняв іслам. Відправ ${commands.help.command}, можливо допоможе...`;
 
 /**
- * Keyboard that will appear after /start command
+ * Keyboard that will appear after /start command.
  */
 const startOptions = {
   reply_markup: JSON.stringify({

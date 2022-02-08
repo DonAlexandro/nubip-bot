@@ -1,20 +1,20 @@
 const { errorMessages } = require('../utils/constants');
 
 /**
- * Custom error class for handling API exceptions
+ * Custom error class for handling API exceptions.
  */
 class ApiError extends Error {
-  /** Code of the error */
+  /** Code of the error. */
   code;
-  /** Message of the error */
+  /** Message of the error. */
   message;
-  /** Where error happend */
+  /** Where error happend. */
   source;
 
   /**
-   * @param {number} code - code of the error
-   * @param {string} message - message of the error
-   * @param {string} [source] - place where error happened
+   * @param {number} code - Code of the error.
+   * @param {string} message - Message of the error.
+   * @param {string} [source] - Place where error happened.
    */
   constructor(code, message, source = '') {
     if (!code || !message) {
@@ -29,10 +29,11 @@ class ApiError extends Error {
   }
 
   /**
-   * Throw 404 not found error
+   * Throw 404 not found error.
    *
-   * @param {string} message - message of the error
-   * @param {string} [source] - file/method where error happened
+   * @param {string} message - Message of the error.
+   * @param {string} [source] - File/method where error happened.
+   * @throws Will throw 404 not found error.
    */
   static NotFound(message, source = '') {
     throw new ApiError(404, message, source);

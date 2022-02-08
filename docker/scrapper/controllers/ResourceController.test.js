@@ -67,7 +67,7 @@ describe('Resource Controller', () => {
 
       const result = { data };
 
-      const spyInit = jest.spyOn(ResourceController, 'init').mockImplementationOnce(() => data);
+      jest.spyOn(ResourceController, 'init').mockImplementationOnce(() => data);
 
       await ResourceController[resource](req, res, next);
 

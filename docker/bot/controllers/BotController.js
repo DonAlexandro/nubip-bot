@@ -1,13 +1,14 @@
 const axios = require('axios');
+const { TelegramAPI } = require('node-telegram-bot-api');
 const { config, startOptions, errorMessage, responseMessages } = require('../utils/constants');
 const { scheduleToReplyMarkup } = require('../utils/functions');
 
 /**
- * Controller for manipulation with bot's commands
+ * Controller for manipulation with bot's commands.
  */
 class BotController {
   /**
-   * @param {TelegramAPI} bot - telegram bot API
+   * @param {TelegramAPI} bot - Telegram bot API.
    */
   constructor(bot) {
     if (!bot) {
@@ -18,12 +19,11 @@ class BotController {
   }
 
   /**
-   * Validate Telegram API message object
+   * Validate Telegram API message object.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
-   * @throw will throw an error if msg object is falsy value, it's not an object, it has no chat or id properties
-   *
-   * @returns {TelegramAPI.Message} validated msg object
+   * @param {TelegramAPI.Message} msg - Object with message info.
+   * @throws Will throw an error if msg object is falsy value, it's not an object, it has no chat or id properties.
+   * @returns {TelegramAPI.Message} Validated msg object.
    */
   validate(msg) {
     if (!msg || typeof msg !== 'object') {
@@ -38,10 +38,10 @@ class BotController {
   }
 
   /**
-   * Common wrapper for every function to handle erros in one place and validate msg object
+   * Common wrapper for every function to handle erros in one place and validate msg object.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
-   * @param {Function} callback - wrapped function
+   * @param {TelegramAPI.Message} msg - Object with message info.
+   * @param {Function} callback - Wrapped function.
    */
   async commandWrapper(msg, callback) {
     try {
@@ -57,9 +57,9 @@ class BotController {
   }
 
   /**
-   * Handle start command
+   * Handle start command.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   start(msg) {
     this.commandWrapper(msg, (validMsg) => {
@@ -70,9 +70,9 @@ class BotController {
   }
 
   /**
-   * Handle info command
+   * Handle info command.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   info(msg) {
     this.commandWrapper(msg, (validMsg) => {
@@ -83,9 +83,9 @@ class BotController {
   }
 
   /**
-   * Handle help command
+   * Handle help command.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   help(msg) {
     this.commandWrapper(msg, (validMsg) => {
@@ -96,9 +96,9 @@ class BotController {
   }
 
   /**
-   * Send image with timetable
+   * Send image with timetable.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   async timetable(msg) {
     await this.commandWrapper(msg, async (validMsg) => {
@@ -112,9 +112,9 @@ class BotController {
   }
 
   /**
-   * Send a bunch of latest news
+   * Send a bunch of latest news.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   async news(msg) {
     await this.commandWrapper(msg, async (validMsg) => {
@@ -134,9 +134,9 @@ class BotController {
   }
 
   /**
-   * Send links to schedules
+   * Send links to schedules.
    *
-   * @param {TelegramAPI.Message} msg - object with message info
+   * @param {TelegramAPI.Message} msg - Object with message info.
    */
   async schedule(msg) {
     await this.commandWrapper(msg, async (validMsg) => {
