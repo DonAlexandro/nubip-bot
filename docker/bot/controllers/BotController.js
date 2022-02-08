@@ -38,7 +38,7 @@ class BotController {
   }
 
   /**
-   * Common wrapper for every function to handle erros in one place and validate msg object.
+   * Common wrapper for every function to handle errors in one place and validate msg object.
    *
    * @param {TelegramAPI.Message} msg - Object with message info.
    * @param {Function} callback - Wrapped function.

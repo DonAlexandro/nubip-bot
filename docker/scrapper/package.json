@@ -1,6 +1,6 @@
 {
-  "name": "scrapper",
-  "version": "0.4.1",
+  "name": "nubip-scrapper",
+  "version": "0.4.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "doc": "jsdoc -c jsdoc.json",
     "test": "cross-env BASE_URL=https://nubip.edu.ua jest --detectOpenHandles",
-    "test:coverage": "cross-env BASE_URL=https://nubip.edu.ua jest --coverage"
+    "test:coverage": "cross-env BASE_URL=https://nubip.edu.ua jest --coverage",
+    "lint": "eslint '**/*.js'"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "winston3-logstash-transport": "^1.2.3"
   },
   "devDependencies": {
+    "better-docs": "^2.7.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",

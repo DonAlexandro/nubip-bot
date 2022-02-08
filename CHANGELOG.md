@@ -1,6 +1,12 @@
 # Changelog
 
-## 22 February 2022
+## 08 February 2022
+
+##### version 0.4.3-beta
+
+Added eslint for static code analyzing and pre-commit hook.
+
+## 07 February 2022
 
 ##### version 0.4.1-beta
 
