@@ -1,10 +1,17 @@
+const { Request, Response } = require('express');
+
 const logger = require('../utils/logger');
 const ApiError = require('../common/ApiError');
 const { nodeEnv } = require('../config');
 const { errorMessages } = require('../utils/constants');
 
 /**
- * Middleware for exceptions handling
+ * Middleware for exceptions handling.
+ *
+ * @param {ApiError | any} err - Error from API endpoint.
+ * @param {Request} req - Standard express request.
+ * @param {Response} res - Standard express response.
+ * @returns {void}
  */
 function errorMiddleware(err, req, res) {
   if (nodeEnv !== 'test') {

@@ -1,14 +1,14 @@
+const cheerio = require('cheerio');
 const { baseUrl } = require('../config');
 const { errorMessages } = require('../utils/constants');
 
 /**
- * Service to load and parse requested information
+ * Service to load and parse requested information.
  */
 class ResourceService {
   /**
-   * @param {cheerio.CheerioAPI} instance - cheerio instance for getting information from tags
-   *
-   * @throws will throw an error if instance is not provided
+   * @param {cheerio.CheerioAPI} instance - Cheerio instance for getting information from tags.
+   * @throws Will throw an error if instance is not provided.
    */
   constructor(instance) {
     if (!instance) {
@@ -19,9 +19,9 @@ class ResourceService {
   }
 
   /**
-   * This function is looking for image with university's timetable
+   * This function is looking for image with university's timetable.
    *
-   * @returns {string} link to image
+   * @returns {string} Link to image.
    */
   timetable() {
     let timetable = 'https://http.cat/404';
@@ -39,9 +39,9 @@ class ResourceService {
   }
 
   /**
-   * This function is looking for files with schedule
+   * This function is looking for files with schedule.
    *
-   * @returns {Array<{name: string, link: string}>} name of each faculty and link to its schedule
+   * @returns {Array<{name: string, link: string}>} Name of each faculty and link to its schedule.
    */
   schedule() {
     const table = this.$('table').not('.MsoNormalTable').children().children().find('td').slice(3).children();
@@ -72,9 +72,9 @@ class ResourceService {
   }
 
   /**
-   * This function is looking for news
+   * This function is looking for news.
    *
-   * @returns {Array<{title: string, link: string, text: string, date: string}>} latest news from first page
+   * @returns {Array<{title: string, link: string, text: string, date: string}>} Latest news from first page.
    */
   news() {
     const list = this.$('.wide-column').children();

@@ -6,7 +6,7 @@ const { nodeEnv } = require('../config');
 const oneHour = 60 * 60;
 
 /**
- * Service for manipulations with cache
+ * Service for manipulations with cache.
  */
 class RedisService {
   client = null;
@@ -22,20 +22,18 @@ class RedisService {
     this.client.on('error', (error) => logger.error(`Redis connection error: ${error}`));
 
     if (nodeEnv !== 'test') {
-      this.client.on('ready', () => logger.info(`Redis is ready to use!`));
+      this.client.on('ready', () => logger.info('Redis is ready to use!'));
     }
 
     await this.client.connect();
   }
 
   /**
-   * Function for fetching cached data
+   * Function for fetching cached data.
    *
-   * @param {string} key - key of cached data in store
-   *
-   * @throws will throw an error if key param was not provided
-   *
-   * @returns {string | Array<object>} cached data from store
+   * @param {string} key - Key of cached data in store.
+   * @throws Will throw an error if key param was not provided.
+   * @returns {string | Array<object>} Cached data from store.
    */
   async getCachedData(key) {
     if (!key) {
@@ -48,13 +46,12 @@ class RedisService {
   }
 
   /**
-   * Function for caching data
+   * Function for caching data.
    *
-   * @param {string} key - key of cached data in store
-   * @param {string | Array<object>} data - data for caching
-   * @param {number} [expiresIn] - how long store will be storing data (1hr by default)
-   *
-   * @throws will throw an error if key or data param were not provided
+   * @param {string} key - Key of cached data in store.
+   * @param {string | Array<object>} data - Data for caching.
+   * @param {number} [expiresIn] - How long store will be storing data (1hr by default).
+   * @throws Will throw an error if key or data param were not provided.
    */
   cacheData(key, data, expiresIn = oneHour) {
     if (!key || !data) {
@@ -65,11 +62,10 @@ class RedisService {
   }
 
   /**
-   * Function for deleting cached data
+   * Function for deleting cached data.
    *
-   * @param {string} key - key of cached data in store
-   *
-   * @throws will throw an error if key was not provided
+   * @param {string} key - Key of cached data in store.
+   * @throws Will throw an error if key was not provided.
    */
   deleteCachedData(key) {
     if (!key) {
@@ -80,9 +76,9 @@ class RedisService {
   }
 
   /**
-   * Function for closing connection to redis
+   * Function for closing connection to redis.
    *
-   * @throws will throw an error if client isn't connected
+   * @throws Will throw an error if client isn't connected.
    */
   closeConnection() {
     if (!this.client) {

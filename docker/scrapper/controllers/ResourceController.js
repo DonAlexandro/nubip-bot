@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { NextFunction, Response, Request } = require('express');
 
 const ResourceService = require('../services/ResourceService');
 const RedisService = require('../services/RedisService');
@@ -8,19 +9,17 @@ const ApiError = require('../common/ApiError');
 const { errorMessages } = require('../utils/constants');
 
 /**
- * Controller for routing requested resources
+ * Controller for routing requested resources.
  */
 class ResourceController {
   /**
    * This function fetch information from NUBiP website and parse it, using appropriate service.
-   * It's also looking for cached data to improve perfomance
+   * It's also looking for cached data to improve perfomance.
    *
-   * @param {string} path - path to NUBiP's webpage, where we can find requested information
-   * @param {string} resource - the name of the resource that we are looking for
-   *
-   * @throws will throw an error if there's no provided resource.
-   *
-   * @returns {string | object[]} information related to searching resource
+   * @param {string} path - Path to NUBiP's webpage, where we can find requested information.
+   * @param {string} resource - The name of the resource that we are looking for.
+   * @throws Will throw an error if there's no provided resource.
+   * @returns {string | object[]} Information related to searching resource.
    */
   async init(path, resource) {
     try {
@@ -70,11 +69,11 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for timetable image
+   * This function searchs for timetable image.
    *
-   * @param {Request} req - route's request object
-   * @param {Response} res - route's response object
-   * @param {NextFunction} next - next function to move information to the next middleware
+   * @param {Request} req - Route's request object.
+   * @param {Response} res - Route's response object.
+   * @param {NextFunction} next - Next function to move information to the next middleware.
    */
   async timetable(req, res, next) {
     try {
@@ -87,11 +86,11 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for schedules
+   * This function searchs for schedules.
    *
-   * @param {Request} req - route's request object
-   * @param {Response} res - route's response object
-   * @param {NextFunction} next - next function to move information to the next middleware
+   * @param {Request} req - Route's request object.
+   * @param {Response} res - Route's response object.
+   * @param {NextFunction} next - Next function to move information to the next middleware.
    */
   async schedule(req, res, next) {
     try {
@@ -104,11 +103,11 @@ class ResourceController {
   }
 
   /**
-   * This function searchs for news
+   * This function searchs for news.
    *
-   * @param {Request} req - route's request object
-   * @param {Response} res - route's response object
-   * @param {NextFunction} next - next function to move information to the next middleware
+   * @param {Request} req - Route's request object.
+   * @param {Response} res - Route's response object.
+   * @param {NextFunction} next - Next function to move information to the next middleware.
    */
   async news(req, res, next) {
     try {

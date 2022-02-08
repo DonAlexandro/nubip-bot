@@ -1,5 +1,5 @@
 /**
- * Global configuration related to .env file
+ * Global configuration related to .env file.
  */
 const globalConfiguration = {
   port: process.env.PORT || 5000,

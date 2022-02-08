@@ -23,6 +23,8 @@ prod-down() {
 }
 
 runAllTests() {
+  exec 1>/dev/null
+
   commandToExecute="npm run test"
 
   if [ "$1" = --withCoverage ]; then
