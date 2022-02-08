@@ -19,7 +19,8 @@
   "scripts": {
     "doc": "jsdoc -c jsdoc.json",
     "test": "jest --detectOpenHandles",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint '**/*.js'"
   },
   "keywords": [],
   "author": "",

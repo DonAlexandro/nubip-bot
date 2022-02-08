@@ -1,5 +1,5 @@
 {
-  "name": "scrapper",
+  "name": "nubip-scrapper",
   "version": "0.4.1",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "doc": "jsdoc -c jsdoc.json",
     "test": "cross-env BASE_URL=https://nubip.edu.ua jest --detectOpenHandles",
-    "test:coverage": "cross-env BASE_URL=https://nubip.edu.ua jest --coverage"
+    "test:coverage": "cross-env BASE_URL=https://nubip.edu.ua jest --coverage",
+    "lint": "eslint '**/*.js'"
   },
   "keywords": [],
   "author": "",

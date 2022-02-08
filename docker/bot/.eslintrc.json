@@ -26,7 +26,7 @@
     "jsdoc/check-types": 1,
     "jsdoc/check-values": 1,
     "jsdoc/empty-tags": 1,
-    "jsdoc/implements-on-classes": 1,
+    "jsdoc/implements-on-classes": ["error"],
     "jsdoc/multiline-blocks": 1,
     "jsdoc/newline-after-description": 1,
     "jsdoc/no-bad-blocks": 1,

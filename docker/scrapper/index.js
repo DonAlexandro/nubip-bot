@@ -23,6 +23,9 @@ app.use('/api', routes);
 
 app.use(errorMiddleware);
 
+/**
+ * Starts the server.
+ */
 async function start() {
   try {
     await RedisService.openConnection();
