@@ -11,6 +11,8 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 `doc` - generate API documentation <br>
 `test` - run tests <br>
 `test:coverage` - run tests with coverage table <br>
+`format` - run prettier to format code <br>
+`lint` - run linter to find errors in code <br>
 
 ### For scrapper
 
@@ -30,3 +32,7 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 `runAllTest [options]` - run unit tests for bot and scrapper. Options:
 
 1. **--withCoverage** - run tests with coverage table
+
+`runAllLinters` - run [eslint](https://eslint.org/) for test and scrapper. <br>
+`preCommitPreparation` - common function that will run tests, linters and formatter before changes commiting. <br>
+`generateDocumentation` - generate API documentation for bot and scrapper. <br>
