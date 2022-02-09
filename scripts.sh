@@ -52,18 +52,6 @@ runAllLinters() {
   popd 1>/dev/null || exit 1
 }
 
-runAllLinters() {
-  commandToExecute="npm run lint"
-
-  pushd ./docker/bot 1>/dev/null || exit 1
-  eval "$commandToExecute"
-  popd 1>/dev/null || exit 1
-
-  pushd ./docker/scrapper 1>/dev/null || exit 1
-  eval "$commandToExecute"
-  popd 1>/dev/null || exit 1
-}
-
 preCommitPreparation() {
   runAllTests
   npm run format
@@ -85,8 +73,3 @@ generateDocumentation() {
   echo "You can find it in docs folder in specific directories."
 }
 
-preCommitPreparation() {
-  runAllTests
-  npm run format
-  runAllLinters
-}
