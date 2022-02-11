@@ -1,5 +1,3 @@
-#!/bin/bash
-
 devBuild() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 }
@@ -69,7 +67,7 @@ generateDocumentation() {
   eval "$commandToExecute"
   popd 1>/dev/null || exit 1
 
-  echo "Documentation for bot and scrapper successfully generated."
+  echo "Documentation for bot and scrapper successfully generated!"
   echo "You can find it in docs folder in specific directories."
 }
 

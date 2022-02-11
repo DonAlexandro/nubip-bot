@@ -33,7 +33,6 @@
     "jsdoc/no-bad-blocks": ["error"],
     "jsdoc/no-defaults": ["error"],
     "jsdoc/no-multi-asterisks": ["error"],
-    "jsdoc/no-undefined-types": ["error"],
     "jsdoc/require-asterisk-prefix": ["error"],
     "jsdoc/require-description-complete-sentence": ["error"],
     "jsdoc/require-hyphen-before-param-description": ["error"],
