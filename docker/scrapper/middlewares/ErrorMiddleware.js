@@ -1,5 +1,3 @@
-const { Request, Response } = require('express');
-
 const logger = require('../utils/logger');
 const ApiError = require('../common/ApiError');
 const { nodeEnv } = require('../config');

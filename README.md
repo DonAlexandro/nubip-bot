@@ -13,6 +13,7 @@ Telegram bot for Ukranian university NULES. [Official website](https://nubip.edu
 `test:coverage` - run tests with coverage table <br>
 `format` - run prettier to format code <br>
 `lint` - run linter to find errors in code <br>
+`husky:prepare` - install husky for commit hooks
 
 ### For scrapper
 

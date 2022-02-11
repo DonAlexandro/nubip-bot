@@ -22,6 +22,11 @@ const errorMessages = {
   }
 };
 
+const oneDayInSeconds = 60 * 60 * 24;
+const threeDayInSeconds = 60 * 60 * 24 * 3;
+
 module.exports = {
-  errorMessages
+  errorMessages,
+  oneDayInSeconds,
+  threeDayInSeconds
 };

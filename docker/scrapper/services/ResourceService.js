@@ -1,4 +1,3 @@
-const cheerio = require('cheerio');
 const { baseUrl } = require('../config');
 const { errorMessages } = require('../utils/constants');
 

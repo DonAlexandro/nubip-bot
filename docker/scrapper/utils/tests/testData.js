@@ -266,6 +266,8 @@ const testNews = [
   }
 ];
 
+const testSchedules = [{ name: 'Schedule', link: 'https://nubip.edu.ua/path/to/schedule' }];
+
 module.exports = {
   src,
   html,
@@ -279,5 +281,6 @@ module.exports = {
   htmlNewsWithoutWideColumn,
   htmlNewsWithoutTitle,
   htmlNewsWithoutDateAndText,
-  testNews
+  testNews,
+  testSchedules
 };
