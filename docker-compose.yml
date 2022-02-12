@@ -1,7 +1,7 @@
 version: '3'
 services:
   scrapper:
-    image: nubip-bot_scrapper
+    image: 996516647936.dkr.ecr.eu-central-1.amazonaws.com/nubip-bot_scrapper
     build: ./docker/scrapper
     ports:
       - 5000:5000
@@ -14,7 +14,7 @@ services:
       - redis
 
   bot:
-    image: nubip-bot_bot
+    image: 996516647936.dkr.ecr.eu-central-1.amazonaws.com/nubip-bot_bot
     build: ./docker/bot
     ports:
       - 3000:3000

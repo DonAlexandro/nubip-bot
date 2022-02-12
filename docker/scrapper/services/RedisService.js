@@ -14,8 +14,8 @@ class RedisService {
   async openConnection() {
     this.client = redis.createClient({
       socket: {
-        host: nodeEnv === 'test' ? 'localhost' : 'redis',
-        port: 6379
+        host: nodeEnv === 'test' ? 'localhost' : process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
       }
     });
 

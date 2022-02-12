@@ -9,7 +9,7 @@ servers:
     description: Main endpoint of scrapper
 
 paths:
-  /timetable:
+  /api/timetable:
     get:
       tags:
         - 'Files'
@@ -27,7 +27,7 @@ paths:
                     example: https://nubip.edu.ua/path/to/required/image.png
         '5XX':
           description: Unexpected error
-  /schedule:
+  /api/schedule:
     get:
       tags:
         - 'Lists'
@@ -54,7 +54,7 @@ paths:
                           example: https://nubip.edu.ua/path/to/required/schedule.xsls
         '5XX':
           description: Unexpected error
-  /news:
+  /api/news:
     get:
       tags:
         - 'Lists'
